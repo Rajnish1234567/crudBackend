@@ -7,7 +7,7 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
 
-@ControllerAdvice(assignableTypes = BankingDetails.class)
+@ControllerAdvice(assignableTypes = BankingDetailsDTO.class)
 public class BankingDetailsValidator implements Validator {
 
     @Override
@@ -28,6 +28,6 @@ public class BankingDetailsValidator implements Validator {
         if(bDto.getPanCardNo()==null){
             errors.rejectValue("pancardNo","404","please enter pancard details");
         }
-        
+
     }
 }

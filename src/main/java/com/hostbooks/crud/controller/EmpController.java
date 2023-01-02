@@ -1,8 +1,7 @@
 package com.hostbooks.crud.controller;
 
-import com.hostbooks.crud.exceptions.EmployeeException;
-import com.hostbooks.crud.models.Employee;
 import com.hostbooks.crud.models.EmployeeDTO;
+import com.hostbooks.crud.models.PaginationDTO;
 import com.hostbooks.crud.models.ResponseDTO;
 import com.hostbooks.crud.services.EmpService;
 import com.hostbooks.crud.validator.EmployeeValidator;
@@ -48,10 +47,15 @@ public class EmpController {
     public ResponseEntity<?> upadateEmp(@Valid @RequestBody EmployeeDTO empDto, Errors result) {
         if(result.hasErrors()){
             return new ResponseEntity<>(ResponseDTO.getResponse(
-                    null, LocalDateTime.now(),HttpStatus.BAD_REQUEST,HttpStatus.BAD_REQUEST.value(),ErrorResponse.getErrorResponse(result)),HttpStatus.OK);
+                    null, LocalDateTime.now(),HttpStatus.BAD_REQUEST,HttpStatus.BAD_REQUEST.value(),ErrorResponse.getErrorResponse(result)),HttpStatus.NOT_ACCEPTABLE);
         }
         EmployeeDTO updatedEmp=empService.updateEmployee(empDto);
         return new ResponseEntity<>(ResponseDTO.getResponse(updatedEmp, LocalDateTime.now(), HttpStatus.OK,HttpStatus.OK.value(), null),HttpStatus.OK);
+    }
+    @PostMapping("/getModifiedList")
+    public ResponseEntity<?> getModifiedList(@RequestBody PaginationDTO paginationDTO){
+        List<EmployeeDTO> employees=empService.getModifiedList(paginationDTO);
+        return  new ResponseEntity<List<EmployeeDTO>>(employees, HttpStatus.OK);
     }
     @GetMapping("/getById/{id}")
     public ResponseEntity<EmployeeDTO> getEmpById(@PathVariable("id") Integer eid){

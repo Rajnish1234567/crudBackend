@@ -6,7 +6,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
-@ControllerAdvice(assignableTypes = Address.class)
+@ControllerAdvice(assignableTypes = AddressDTO.class)
 public class AddressValidator implements Validator {
 
     @Override

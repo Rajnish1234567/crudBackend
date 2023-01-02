@@ -1,10 +1,7 @@
 package com.hostbooks.crud.services;
 
 import com.hostbooks.crud.exceptions.EmployeeException;
-import com.hostbooks.crud.models.Address;
-import com.hostbooks.crud.models.AddressDTO;
-import com.hostbooks.crud.models.Employee;
-import com.hostbooks.crud.models.EmployeeDTO;
+import com.hostbooks.crud.models.*;
 import com.hostbooks.crud.repository.AddressDao;
 import com.hostbooks.crud.repository.BankingDao;
 import com.hostbooks.crud.repository.EmpDao;
@@ -51,6 +48,14 @@ public class EmpServiceImpl implements EmpService{
     @Override
     public List<EmployeeDTO> getEmployeeList() {
         List<Employee> employees=edao.getEmployeeList();
+        List<EmployeeDTO> lists=new ArrayList<>();
+        for(Employee emp: employees)lists.add(this.convertToDTO(emp));
+        return lists;
+    }
+
+    @Override
+    public List<EmployeeDTO> getModifiedList(PaginationDTO paginationDTO) {
+        List<Employee> employees=edao.listEmployee(paginationDTO);
         List<EmployeeDTO> lists=new ArrayList<>();
         for(Employee emp: employees)lists.add(this.convertToDTO(emp));
         return lists;
