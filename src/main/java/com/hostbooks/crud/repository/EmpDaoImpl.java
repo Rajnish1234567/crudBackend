@@ -100,7 +100,8 @@ public class EmpDaoImpl implements EmpDao{
         Root<Employee> root=criteriaQuery.from(Employee.class);
         criteriaQuery.where(criteriaBuilder.equal(root.get("emailId"),email));
         TypedQuery<Employee> query=entityManager.createQuery(criteriaQuery);
-        return query.getSingleResult();
+        List<Employee> list = query.setMaxResults(1).getResultList();
+        return list != null && list.size() > 0 ? list.get(0) : null;
     }
 
     @Override
