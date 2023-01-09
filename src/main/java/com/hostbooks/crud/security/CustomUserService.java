@@ -3,7 +3,6 @@ package com.hostbooks.crud.security;
 import com.hostbooks.crud.models.Employee;
 import com.hostbooks.crud.repository.EmpDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

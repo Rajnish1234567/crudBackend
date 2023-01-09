@@ -20,7 +20,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class MySecurity extends WebSecurityConfigurerAdapter {
-
     @Autowired
     public CustomUserService customUserService;
     @Autowired
@@ -30,9 +29,9 @@ public class MySecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.cors();
         http
                 .csrf().disable()
-                .cors().disable()
                 .authorizeRequests()
                 .antMatchers("/hostbooks/auth/login").permitAll()
                 .anyRequest() .authenticated()
@@ -42,9 +41,7 @@ public class MySecurity extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
         http.addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
     }
 
     @Override

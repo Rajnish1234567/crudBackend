@@ -12,13 +12,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/hostbooks/auth")
+@CrossOrigin(origins="*")
 public class AuthController {
     @Autowired
     private UserDetailsService userDetailsService;
@@ -42,7 +40,6 @@ public class AuthController {
             this.authenticationManager.authenticate(authenticationToken);
         }
         catch (BadCredentialsException bce){
-            System.out.println("Bad Credentials");
             throw new Exception("Bad credentials");
         }
     }

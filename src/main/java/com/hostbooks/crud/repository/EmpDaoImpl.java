@@ -3,6 +3,8 @@ package com.hostbooks.crud.repository;
 import com.hostbooks.crud.models.Employee;
 import com.hostbooks.crud.models.PaginationDTO;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,15 +19,19 @@ public class EmpDaoImpl implements EmpDao{
 
     @PersistenceContext
     private EntityManager entityManager;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Employee addEmployee(Employee employee) {
+        employee.setPassword(getEncodedPassword(employee.getPassword()));
         entityManager.persist(employee);
         return employee;
     }
 
     @Override
     public Employee updateEmployee(Employee employee) {
+        employee.setPassword(getEncodedPassword(employee.getPassword()));
         return entityManager.merge(employee);
 
     }
@@ -112,5 +118,8 @@ public class EmpDaoImpl implements EmpDao{
         criteriaUpdate.where(root.get("employeeId").in(empId));
         criteriaUpdate.set("deleteFlag", true);
         entityManager.createQuery(criteriaUpdate).executeUpdate();
+    }
+    public String getEncodedPassword(String password){
+        return passwordEncoder.encode(password);
     }
 }
